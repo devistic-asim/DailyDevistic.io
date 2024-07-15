@@ -102,9 +102,64 @@
                             oninput="autoResize(this)"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="add_comments">
+                        <label for="add_comments" style="cursor:pointer;">
                             <input type="checkbox" id="add_comments"> Add Comments
                         </label>
+                    </div>
+                    <div class="form-group" id="comment_style_group" style="display:none; gap: 3%; flex-wrap: wrap;">
+                        <label>Select Comment Style:</label>
+                        <div>
+                            <input type="radio" id="comment_style_html" name="comment_style" value="html" checked>
+                            <label for="comment_style_html">HTML <code>&lt;!-- --&gt;</code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_js" name="comment_style" value="js">
+                            <label for="comment_style_js">JavaScript <code>// </code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_python" name="comment_style" value="python">
+                            <label for="comment_style_python">Python <code># </code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_java" name="comment_style" value="java">
+                            <label for="comment_style_java">Java <code>// </code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_csharp" name="comment_style" value="csharp">
+                            <label for="comment_style_csharp">C# <code>// </code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_css" name="comment_style" value="css">
+                            <label for="comment_style_css">CSS <code>/* */</code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_sql" name="comment_style" value="sql">
+                            <label for="comment_style_sql">SQL <code>-- </code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_ruby" name="comment_style" value="ruby">
+                            <label for="comment_style_ruby">Ruby <code># </code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_php" name="comment_style" value="php">
+                            <label for="comment_style_php">PHP <code>// </code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_c" name="comment_style" value="c">
+                            <label for="comment_style_c">C <code>// </code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_cpp" name="comment_style" value="cpp">
+                            <label for="comment_style_cpp">C++ <code>// </code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_shell" name="comment_style" value="shell">
+                            <label for="comment_style_shell">Shell <code># </code></label>
+                        </div>
+                        <div>
+                            <input type="radio" id="comment_style_perl" name="comment_style" value="perl">
+                            <label for="comment_style_perl">Perl <code># </code></label>
+                        </div>
                     </div>
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-primary" onclick="makeSnippets()">Submit</button>
@@ -134,6 +189,40 @@
         function addColumns() {
             $('#columns').val(`MobileNumber,AlternateNumber,WhatsappNumber,EmergencyNumber,ContactPersonName,PersonRelation,EmailIDPersonal,EmailIDOfficial,ReferenceType,ReferenceName,ReferenceMobile,RefRelation`);
             autoResize($('#columns')[0]);
+        }
+
+        $('#add_comments').change(function() {
+            if (this.checked) {
+                $('#comment_style_group').show()
+                .css('display', 'flex');
+            } else {
+                $('#comment_style_group').hide();
+            }
+        });
+
+        function getCommentPrefixSuffix(style) {
+            switch (style) {
+                case 'html':
+                    return ['<!-- ', ' -->'];
+                case 'js':
+                case 'java':
+                case 'csharp':
+                case 'php':
+                case 'c':
+                case 'cpp':
+                    return ['// ', ''];
+                case 'python':
+                case 'ruby':
+                case 'shell':
+                case 'perl':
+                    return ['# ', ''];
+                case 'css':
+                    return ['/* ', ' */'];
+                case 'sql':
+                    return ['-- ', ''];
+                default:
+                    return ['<!-- ', ' -->'];
+            }
         }
 
         var i = 0;
@@ -172,6 +261,7 @@
 
             var codeSnippet = $('#code_snippet').val();
             var addComments = $('#add_comments').is(':checked');
+            var commentStyle = $('input[name="comment_style"]:checked').val();
 
             if (columns.length === 0 || codeSnippet.trim() === '') {
                 alert("Please fill in both columns and code snippet before submitting.");
@@ -182,9 +272,12 @@
             var repeatedSnippets = columns.map(function (column) {
                 var columnWithSpace = column.replace(/([A-Z])/g, ' $1').trim();
                 var snippetWithColumn = codeSnippet.replace(/column_space/g, columnWithSpace).replace(/column/g, column);
+        
                 if (addComments) {
-                    snippetWithColumn = `<!-- ${columnWithSpace} -->\n${snippetWithColumn}`;
+                    var [prefix, suffix] = getCommentPrefixSuffix(commentStyle);
+                    snippetWithColumn = `${prefix}${columnWithSpace}${suffix}\n${snippetWithColumn}`;
                 }
+        
                 return snippetWithColumn;
             });
 
