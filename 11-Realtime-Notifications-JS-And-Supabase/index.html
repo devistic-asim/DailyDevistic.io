@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supabase Realtime Broadcast</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+  <!-- Supabase JavaScript library from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- Custom Styles (Optional) -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Supabase Realtime Broadcast</h1>
+
+    <!-- Users -->
+    <div id="adminSection" style="display: none;">
+      <h2>Admin Panel</h2>
+      <button id="showAllPopups" class="btn btn-warning">Show Popup for All Users</button>
+      <br>
+      <br>
+      <table class="table table-bordered" id="userTable">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- User rows will be added dynamically -->
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+    <div class="mb-3">
+      <textarea id="messageInput" class="form-control" rows="3" placeholder="Type a message..."></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="userSelect" class="form-label">Select User:</label>
+      <select id="userSelect" class="form-select">
+        <option value="0">All</option>
+        <!-- User options will be populated here -->
+      </select>
+    </div>
+    <button id="sendMessage" class="btn btn-primary">Send</button>
+
+    <hr>
+    <div class="mt-4">
+      <h2>Messages</h2>
+      <ul id="messageList" class="list-unstyled"></ul>
+    </div>
+
+    <!-- Button to Open the Modal -->
+    <!-- <button id="fetchData" class="btn btn-info mt-4">Fetch Data</button> -->
+
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="dataModal" tabindex="-1" aria-labelledby="dataModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="dataModalLabel">Data Records</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered" id="recordTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Created At</th>
+                  <th>Subject</th>
+                  <th>Message</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Records will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include your custom JavaScript file -->
+  <script src="app.js" defer></script>
+</body>
+
+</html>
