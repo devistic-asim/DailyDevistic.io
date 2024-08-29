@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Swiper Slider with Bootstrap 4</title>
+
+    <!-- Bootstrap 4 CSS from CDN -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Swiper CSS from CDN -->
+    <link rel="stylesheet" href="./css/swiper-bundle.min.css" />
+
+    <!-- Custom CSS -->
+    <style>
+      .swiper {
+        width: 100%;
+        height: 100%;
+      }
+
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #0000001c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+
+      .swiper-slide-active {
+        border: 1px solid #5050509d;
+      }
+
+      .swiper {
+        width: 100%;
+        height: 300px;
+        margin: 20px auto;
+      }
+
+      .swiper-button-next,
+      .swiper-button-prev {
+        color: #007aff;
+      }
+      /*
+        .swiper-button-prev {
+            left: -30px;
+        }
+
+        .swiper-button-next {
+            right: -30px;
+        }
+        */
+
+      .append-buttons {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .append-buttons button {
+        display: inline-block;
+        cursor: pointer;
+        border: 1px solid #007aff;
+        color: #007aff;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        margin: 0 10px;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container mt-5">
+      <h2 class="text-center mb-4">Swiper Slider with Bootstrap 4</h2>
+      <div class="row">
+        <div class="col-12">
+          <!-- Swiper Slider -->
+          <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">Slide 1</div>
+              <div class="swiper-slide">Slide 2</div>
+              <div class="swiper-slide">Slide 3</div>
+              <div class="swiper-slide">Slide 4</div>
+            </div>
+            <!-- Swiper Navigation Buttons -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- Swiper Pagination -->
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery and Bootstrap JS from CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Swiper JS from CDN -->
+    <script src="./js/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        centeredSlides: true,
+        spaceBetween: 30,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+
+      // Make Slide Active on Click
+      document.querySelectorAll(".swiper-slide").forEach((slide) => {
+        slide.addEventListener("click", function () {
+          let index = Array.from(slide.parentNode.children).indexOf(slide); // Get clicked slide index
+          swiper.slideTo(index); // Navigate to the clicked slide
+        });
+      });
+    </script>
+  </body>
+</html>
